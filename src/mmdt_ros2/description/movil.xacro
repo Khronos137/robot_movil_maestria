@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <material name="black"><color rgba="0 0 0 1"/></material>
+
+    <link name="chasis">
+        <inertial>
+            <origin xyz="-0.157847 -0.000989 -0.068034" rpy="0 0 0" />
+            <mass value="18.136" />
+            <inertia ixx="0.127" ixy="0.001" ixz="0.015" iyy="0.318" iyz="0" izz="0.329" />
+        </inertial>
+        <visual><geometry><mesh filename="file://$(find mmdt_ros2)/meshes/chasis.STL" /></geometry></visual>
+        <collision><origin xyz="-0.2 0 -0.1"/><geometry><box size="0.6 0.25 0.15"/></geometry></collision>
+    </link>
+
+    <link name="rueda1">
+        <inertial>
+            <origin xyz="-0.000001 0.10103 -0.000002" rpy="0 0 0" />
+            <mass value="2.2464" />
+            <inertia ixx="0.008" ixy="0" ixz="0" iyy="0.011" iyz="0" izz="0.008" />
+        </inertial>
+        <visual><geometry><mesh filename="file://$(find mmdt_ros2)/meshes/rueda1.STL" /></geometry></visual>
+        <collision><origin xyz="0 0.1 0" rpy="1.57 0 0" /><geometry><cylinder length="0.06" radius="0.13"/></geometry></collision>
+    </link>
+    <joint name="ejeRueda_FI" type="continuous">
+        <origin xyz="0.054 0.1651 -0.1548" /><parent link="chasis" /><child link="rueda1" /><axis xyz="0 1 0" />
+        <limit effort="1000" velocity="20.0"/><dynamics damping="0.7" friction="0.1" />
+    </joint>
+
+    <link name="rueda2">
+        <inertial>
+            <origin xyz="0.000001 -0.10103 -0.000002" rpy="0 0 0" />
+            <mass value="2.2464" />
+            <inertia ixx="0.008" ixy="0" ixz="0" iyy="0.011" iyz="0" izz="0.008" />
+        </inertial>
+        <visual><geometry><mesh filename="file://$(find mmdt_ros2)/meshes/rueda2.STL" /></geometry></visual>
+        <collision><origin xyz="0 -0.1 0" rpy="1.57 0 0" /><geometry><cylinder length="0.06" radius="0.13"/></geometry></collision>
+    </link>
+    <joint name="ejeRueda_FD" type="continuous">
+        <origin xyz="0.054 -0.1651 -0.1548" /><parent link="chasis" /><child link="rueda2" /><axis xyz="0 1 0" />
+        <limit effort="1000" velocity="20.0"/><dynamics damping="0.7" friction="0.1" />
+    </joint>
+
+    <link name="rueda3">
+        <inertial>
+            <origin xyz="-0.000001 0.10103 -0.000002" rpy="0 0 0" />
+            <mass value="2.2464" />
+            <inertia ixx="0.008" ixy="0" ixz="0" iyy="0.011" iyz="0" izz="0.008" />
+        </inertial>
+        <visual><geometry><mesh filename="file://$(find mmdt_ros2)/meshes/rueda3.STL" /></geometry></visual>
+        <collision><origin xyz="0 0.1 0" rpy="1.57 0 0" /><geometry><cylinder length="0.06" radius="0.13"/></geometry></collision>
+    </link>
+    <joint name="ejeRueda_TI" type="continuous">
+        <origin xyz="-0.446 0.1651 -0.1548" /><parent link="chasis" /><child link="rueda3" /><axis xyz="0 1 0" />
+        <limit effort="1000" velocity="20.0"/><dynamics damping="0.7" friction="0.1" />
+    </joint>
+
+    <link name="rueda4">
+        <inertial>
+            <origin xyz="0.000001 -0.10103 -0.000002" rpy="0 0 0" />
+            <mass value="2.2464" />
+            <inertia ixx="0.008" ixy="0" ixz="0" iyy="0.011" iyz="0" izz="0.008" />
+        </inertial>
+        <visual><geometry><mesh filename="file://$(find mmdt_ros2)/meshes/rueda4.STL" /></geometry></visual>
+        <collision><origin xyz="0 -0.1 0" rpy="1.57 0 0" /><geometry><cylinder length="0.06" radius="0.13"/></geometry></collision>
+    </link>
+    <joint name="ejeRueda_TD" type="continuous">
+        <origin xyz="-0.446 -0.1651 -0.155" /><parent link="chasis" /><child link="rueda4" /><axis xyz="0 1 0" />
+        <limit effort="1000" velocity="20.0"/><dynamics damping="0.7" friction="0.1" />
+    </joint>
+    
+    <transmission name="ejeRueda_FI_transmission"><type>transmission_interface/SimpleTransmission</type><joint name="ejeRueda_FI"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></joint><actuator name="ejeRueda_FI_motor"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></actuator></transmission>
+    <transmission name="ejeRueda_FD_transmission"><type>transmission_interface/SimpleTransmission</type><joint name="ejeRueda_FD"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></joint><actuator name="ejeRueda_FD_motor"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></actuator></transmission>
+    <transmission name="ejeRueda_TI_transmission"><type>transmission_interface/SimpleTransmission</type><joint name="ejeRueda_TI"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></joint><actuator name="ejeRueda_TI_motor"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></actuator></transmission>
+    <transmission name="ejeRueda_TD_transmission"><type>transmission_interface/SimpleTransmission</type><joint name="ejeRueda_TD"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></joint><actuator name="ejeRueda_TD_motor"><hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface></actuator></transmission>
+
+    <!-- <gazebo reference="rueda1"><mu1>5.0</mu1><mu2>3.0</mu2><kp>1000000.0</kp><kd>100.0</kd></gazebo>
+    <gazebo reference="rueda2"><mu1>5.0</mu1><mu2>3.0</mu2><kp>1000000.0</kp><kd>100.0</kd></gazebo>
+    <gazebo reference="rueda3"><mu1>5.0</mu1><mu2>3.0</mu2><kp>1000000.0</kp><kd>100.0</kd></gazebo>
+    <gazebo reference="rueda4"><mu1>5.0</mu1><mu2>3.0</mu2><kp>1000000.0</kp><kd>100.0</kd></gazebo>
+
+    <gazebo reference="rueda1"><material>Gazebo/Grey</material></gazebo>
+    <gazebo reference="rueda2"><material>Gazebo/Grey</material></gazebo>
+    <gazebo reference="rueda3"><material>Gazebo/Grey</material></gazebo>
+    <gazebo reference="rueda4"><material>Gazebo/Grey</material></gazebo> -->
+
+    <gazebo reference="rueda1">
+        <mu1>0.5</mu1> <mu2>0.5</mu2> <kp>10000000.0</kp> <kd>1.0</kd>   <minDepth>0.001</minDepth> <maxVel>0.1</maxVel> <material>Gazebo/Grey</material>
+    </gazebo>
+    <gazebo reference="rueda2">
+        <mu1>0.5</mu1> <mu2>0.5</mu2> <kp>10000000.0</kp> <kd>1.0</kd>   <minDepth>0.001</minDepth> <maxVel>0.1</maxVel> <material>Gazebo/Grey</material>
+    </gazebo>
+    <gazebo reference="rueda3">
+        <mu1>0.5</mu1> <mu2>0.5</mu2> <kp>10000000.0</kp> <kd>1.0</kd>   <minDepth>0.001</minDepth> <maxVel>0.1</maxVel> <material>Gazebo/Grey</material>
+    </gazebo>
+    <gazebo reference="rueda4">
+        <mu1>0.5</mu1> <mu2>0.5</mu2> <kp>10000000.0</kp> <kd>1.0</kd>   <minDepth>0.001</minDepth> <maxVel>0.1</maxVel> <material>Gazebo/Grey</material>
+    </gazebo>
+
+</robot>

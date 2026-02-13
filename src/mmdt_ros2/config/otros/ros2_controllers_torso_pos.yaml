@@ -1,0 +1,24 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    torso_position_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+# ===== Configuración detallada =====
+torso_position_controller:
+  ros__parameters:
+    joints:
+      - bEjeBaseTorso
+      - bEjeTorso
+
+    command_interfaces: 
+      - position
+    state_interfaces:   
+      - position
+      - velocity
+
+    # Las ganancias PID siguen siendo necesarias
+    gains:
+      bEjeBaseTorso: {p: 100.0, i: 10.0, d: 1.0}
+      bEjeTorso:     {p: 100.0, i: 10.0, d: 1.0}

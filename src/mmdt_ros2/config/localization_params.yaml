@@ -1,0 +1,14 @@
+# localization_params.yaml
+
+localization_node:
+    ros__parameters:
+        # Valores que me diste:
+        wheel_radius: 0.25
+        wheel_separation: 0.7
+
+        # Mapeo de los nombres de tus joints "reales"
+        # {rueda izquierda frontal, rueda derecha frontal, rueda izquierda trasera, rueda derecha trasera}
+        left_front_joint_name: "ejeRueda_FI"
+        right_front_joint_name: "ejeRueda_FD"
+        left_rear_joint_name: "ejeRueda_TI"
+        right_rear_joint_name: "ejeRueda_TD"

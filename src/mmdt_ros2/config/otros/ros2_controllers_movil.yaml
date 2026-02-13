@@ -1,0 +1,58 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    # --- 1. Broadcaster (SOLO SE DEFINE AQUÍ) ---
+    joint_broad:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # --- 2. Controlador de Ruedas ---
+    controlador_velocidad_ruedas:
+      type: velocity_controllers/JointGroupVelocityController
+
+# ==================================================
+# --- Configuración del Broadcaster (joint_broad) ---
+# ==================================================
+joint_broad:
+  ros__parameters:
+    
+    # --- El "orden bonito" para TODOS los 12 joints ---
+    joints:
+      - eje1
+      - eje2
+      - eje3
+      - eje4
+      - bEjeBaseTorso
+      - bEjeTorso
+      - manipDer_joint1
+      - manipDer_joint2
+      - manipDer_joint3
+      - manipDer_joint4
+      - manipDer_joint5
+      - manipDer_joint6
+
+# ==================================================
+# --- Configuración del Controlador de Ruedas ---
+# ==================================================
+controlador_velocidad_ruedas:
+  ros__parameters:
+    
+    # --- SOLO controla las 4 ruedas ---
+    joints:
+      - eje1
+      - eje2
+      - eje3
+      - eje4
+    
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+
+    # --- Ganancias solo para las 4 ruedas ---
+    gains:
+      eje1: {p: 30.0, i: 1.5, d: 1.5}
+      eje2: {p: 20.0, i: 1.5, d: 0.5}
+      eje3: {p: 20.0, i: 1.5, d: 0.5}
+      eje4: {p: 30.0, i: 1.5, d: 1.5}

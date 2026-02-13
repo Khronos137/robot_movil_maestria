@@ -1,0 +1,50 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    # ==================================================
+    # --- BROADCASTER GLOBAL (solo uno) ---
+    # ==================================================
+    joint_broad:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # ==================================================
+    # --- CONTROLADOR DE RUEDAS (VELOCIDAD) ---
+    # ==================================================
+    controlador_velocidad_ruedas:
+      type: velocity_controllers/JointGroupVelocityController
+
+# ==================================================
+# --- CONFIGURACIÓN DEL JOINT STATE BROADCASTER ---
+# ==================================================
+joint_broad:
+  ros__parameters:
+    # Este orden define cómo aparecerán los joints en /joint_states
+    joints:
+      - ejeRueda_FI
+      - ejeRueda_FD
+      - ejeRueda_TI
+      - ejeRueda_TD
+
+# ==================================================
+# --- CONTROLADOR DE VELOCIDAD DE RUEDAS ---
+# ==================================================
+controlador_velocidad_ruedas:
+  ros__parameters:
+    joints:
+      - ejeRueda_FI
+      - ejeRueda_FD
+      - ejeRueda_TI
+      - ejeRueda_TD
+
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+
+    gains:
+      ejeRueda_FI: {p: 50.0, i: 0.5, d: 1.5}
+      ejeRueda_FD: {p: 30.0, i: 0.5, d: 0.5}
+      ejeRueda_TI: {p: 50.0, i: 0.5, d: 0.5}
+      ejeRueda_TD: {p: 30.0, i: 0.5, d: 1.5}

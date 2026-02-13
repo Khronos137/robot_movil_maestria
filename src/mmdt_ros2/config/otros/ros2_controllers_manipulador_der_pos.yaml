@@ -1,0 +1,47 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Frecuencia en Hz
+
+    # =================================================================
+    # --- Controlador de POSICIÓN para el Brazo Derecho ---
+    # Usamos un nombre claro (ej. _position_controller)
+    # y el TIPO correcto para que se quede rígido
+    # =================================================================
+    manipulator_h_der_position_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+# =================================================================
+# --- Configuración Detallada del Controlador de Posición ---
+# =================================================================
+manipulator_h_der_position_controller:
+  ros__parameters:
+    
+    # --- 1. Joints que va a controlar ---
+    # (Estos son los nombres de tu manipulator_h_der.xacro)
+    joints:
+      - manipDer_joint1
+      - manipDer_joint2
+      - manipDer_joint3
+      - manipDer_joint4
+      - manipDer_joint5
+      - manipDer_joint6
+
+    # --- 2. Interfaces (¡ESTO FALTABA!) ---
+    # Le decimos al controlador qué debe comandar (posición)
+    # y qué debe leer (posición y velocidad).
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+      
+    # --- 3. Ganancias PID (La "Fuerza") ---
+    # Esto es lo que le da la rigidez para vencer la gravedad.
+    # (Estos valores son un punto de partida, ajústalos si es necesario).
+    gains:
+      manipDer_joint1: {p: 100.0, i: 10.0, d: 1.0}
+      manipDer_joint2: {p: 100.0, i: 10.0, d: 1.0}
+      manipDer_joint3: {p: 100.0, i: 10.0, d: 1.0}
+      manipDer_joint4: {p: 100.0, i: 10.0, d: 1.0}
+      manipDer_joint5: {p: 100.0, i: 10.0, d: 1.0}
+      manipDer_joint6: {p: 100.0, i: 10.0, d: 1.0}

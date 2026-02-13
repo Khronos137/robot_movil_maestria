@@ -1,0 +1,32 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Frecuencia en Hz con la que se actualiza el gestor de controladores
+
+    # ==== Controlador para publicar el estado de las articulaciones ====
+    # Esencial para que RViz y MoveIt! sepan la posición del robot.
+    # joint_state_broadcaster:
+    #   type: joint_state_broadcaster/JointStateBroadcaster
+
+    # ==== Controlador de movimiento para el brazo ====
+    # Renombrado para que coincida con tu robot.
+    manipulator_h_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+# ===== Configuración detallada del controlador de movimiento =====
+manipulator_h_velocity_controller:
+  ros__parameters:
+    # Lista de articulaciones que este controlador va a manejar.
+    joints:
+      - manipDer_joint1
+      - manipDer_joint2
+      - manipDer_joint3
+      - manipDer_joint4
+      - manipDer_joint5
+      - manipDer_joint6
+
+    # Interfaces que usa el controlador (deben coincidir con el .xacro).
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity

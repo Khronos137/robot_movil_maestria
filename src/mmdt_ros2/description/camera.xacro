@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+
+<!-- LA VISUALIZACION DE LA CAMARA EN EL TOPICO ESTA MAL, POR CAMBIAR -->
+
+    <link
+        name="real_sense_link">
+        <inertial>
+            <origin
+            xyz="0.016329 7.1321E-06 0.0035976"
+            rpy="0 0 0" />
+            <mass
+            value="0.017609" />
+            <inertia
+            ixx="9.8482E-07"
+            ixy="-4.3679E-09"
+            ixz="-1.3418E-08"
+            iyy="1.3366E-05"
+            iyz="1.9077E-09"
+            izz="1.4091E-05" />
+        </inertial>
+        <visual>
+            <origin
+            xyz="-0.1 0 0"
+            rpy="0 0 0" />
+            <geometry>
+            <mesh
+                filename="file://$(find mmdt_ros2)/meshes/real_sense_tracking.STL" />
+            </geometry>
+            <material
+            name="">
+            <color
+                rgba="0.75294 0.75294 0.75294 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+            xyz="0 0 0"
+            rpy="0 0 0" />
+            <geometry>
+            <mesh
+                filename="file://$(find mmdt_ros2)/meshes/real_sense_tracking.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint
+        name="eje_real_sense"
+        type="fixed">
+        <origin
+        xyz="0.15842 0.00875 0.01"
+        rpy="0 0 0" />
+        <parent
+        link="chasis" />
+        <child
+        link="real_sense_link" />
+        <axis
+        xyz="0 0 0" />
+    </joint>
+
+    <link
+        name="real_sense_ROT_link">
+
+    </link>
+
+    <joint
+        name="eje_real_senseROT"
+        type="fixed">
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <parent
+        link="real_sense_link" />
+        <child
+        link="real_sense_ROT_link" />
+        <axis
+        xyz="0 0 0" />
+    </joint>
+
+
+    <gazebo reference="real_sense_ROT_link">
+        <material>Gazebo/Black</material>
+
+        <sensor name="camera" type="camera">
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <camera>
+                <horizontal_fov>1.089</horizontal_fov>
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>real_sense_ROT_link</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+
+    <!-- <joint name="camera_joint" type="fixed">
+        <parent link="chasis"/>
+        <child link="camera_link"/>
+        <origin xyz="0.276 0 0.181" rpy="0 0.18 0"/>
+    </joint>
+
+    <link name="camera_link">
+        <visual>
+            <geometry>
+                <box size="0.010 0.03 0.03"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 -0.05"/>
+            <geometry>
+                <cylinder radius="0.002" length="0.1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="camera_link_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+
+    <link name="camera_link_optical"></link> -->
+
+<!-- 
+    <gazebo reference="camera_link">
+        <material>Gazebo/Black</material>
+
+        <sensor name="camera" type="camera">
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <camera>
+                <horizontal_fov>1.089</horizontal_fov>
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>camera_link_optical</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo> -->
+
+
+</robot>
